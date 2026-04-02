@@ -2,6 +2,12 @@
 
 **Fun Pokédex** is a RESTful API designed to provide structured and comprehensive information about Pokémon, with a twist.
 
+## Integrations
+
+- Pokémon data is retrieved from the public PokéAPI, specifically the Pokémon species endpoint.
+- Description translations are handled via the FunTranslations API, using either the Yoda or Shakespeare translation based on the defined rules.
+
+
 ## Assumptions
 
 - The first available English flavor text is used as the Pokémon description
@@ -10,7 +16,6 @@
 ## Design decisions & trade-offs
 
 - Controllers were chosen over minimal APIs to provide a clearer structure and better separation of concerns
-- No persistent caching was implemented to keep the solution simple, but it could be added to reduce external API calls
 
 ## Error handling
 
