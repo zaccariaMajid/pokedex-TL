@@ -42,7 +42,12 @@ In a production environment, a distributed cache (e.g. Redis) would be more appr
 
 ## Project Structure
 
+The project is implemented as a .NET Web API.
+
+The solution uses the `.slnx` format to organize multiple projects.
+
 The project is organized as follows:
+
 
 ```
 /src
