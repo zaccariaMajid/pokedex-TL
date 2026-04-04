@@ -55,9 +55,15 @@ The project is organized as follows:
     Program.cs
 
   /Pokedex.Application
+    DependencyInjection.cs
     Interfaces/
       IPokeApiClient.cs
+      IPokemonService.cs
       ITranslationApiClient.cs
+      ITranslationService.cs
+    Services/
+      PokemonService.cs
+      TranslationService.cs
 
   /Pokedex.Domain
     Models/
@@ -86,7 +92,7 @@ The project is structured following Clean Architecture principles, with a clear 
 
 The API layer is responsible only for handling HTTP requests and responses, keeping controllers thin and focused.
 
-The application layer contains the core logic of the system. It orchestrates the flow of data and defines the main use cases, relying on interfaces rather than concrete implementations.
+The application layer contains the core logic of the system. It orchestrates the flow of data, applies caching for base Pokémon lookups, and handles translation fallback behavior while relying on interfaces rather than concrete implementations.
 
 The domain layer defines the core models used across the application, keeping them independent from external concerns.
 
@@ -124,4 +130,9 @@ The translation follows these rules:
 
 ---
 
-Both endpoints are designed to be simple and predictable, returning standard HTTP status codes for success and error scenarios.
+Both endpoints are designed to be simple and predictable:
+
+* `200 OK` when the Pokémon is found
+* `404 Not Found` when the Pokémon does not exist
+
+Base Pokémon lookups are cached in memory for 5 minutes to reduce repeated calls to PokéAPI.
