@@ -50,6 +50,8 @@ The project is organized as follows:
 ```
 /src
   /Pokedex.Api
+    Contracts/
+      PokemonResponse.cs
     Controllers/
       PokemonController.cs
     Program.cs
@@ -86,6 +88,9 @@ The project is organized as follows:
 
 /tests
   /Pokedex.Tests
+    Services/
+      PokemonServiceTests.cs
+      TranslationServiceTests.cs
 ```
 
 The project is structured following Clean Architecture principles, with a clear separation of responsibilities between layers.
@@ -136,3 +141,24 @@ Both endpoints are designed to be simple and predictable:
 * `404 Not Found` when the Pokémon does not exist
 
 Base Pokémon lookups are cached in memory for 5 minutes to reduce repeated calls to PokéAPI.
+
+## How to run
+
+### Option 1 — Run locally (recommended)
+
+1. Install .NET SDK (LTS version)
+2. Navigate to the API project
+3. Run:
+   dotnet run
+4. The API will be available at:
+   http://localhost:5000/swagger
+
+---
+
+### Option 2 — Run with Docker
+
+1. Ensure Docker is installed
+2. Run:
+   docker compose up --build
+3. The API will be available at:
+   http://localhost:8080/swagger
