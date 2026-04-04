@@ -52,24 +52,31 @@ The project is organized as follows:
   /Pokedex.Api
     Controllers/
       PokemonController.cs
+    Program.cs
 
   /Pokedex.Application
     Interfaces/
-      IPokemonService.cs
-      ITranslationService.cs
-
-    Services/
-      PokemonService.cs
-      TranslationService.cs
+      IPokeApiClient.cs
+      ITranslationApiClient.cs
 
   /Pokedex.Domain
     Models/
       Pokemon.cs
 
   /Pokedex.Infrastructure
-    Clients/
-      PokeApiClient.cs
-      TranslationApiClient.cs
+    DependencyInjection.cs
+    Integrations/
+      /FunTranslations
+        TranslationApiClient.cs
+        TranslationRequest.cs
+        Translation.cs
+        TranslationContents.cs
+      /PokeApi
+        PokeApiClient.cs
+        PokeApiSpecies.cs
+        FlavorTextEntry.cs
+        Habitat.cs
+        Language.cs
 
 /tests
   /Pokedex.Tests
