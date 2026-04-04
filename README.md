@@ -42,7 +42,7 @@ Unit tests focus on:
 
 The project is implemented as a .NET Web API.
 
-The solution uses the `.slnx` format to organize multiple projects.
+The solution uses the `.sln` format to organize multiple projects.
 
 The project is organized as follows:
 
