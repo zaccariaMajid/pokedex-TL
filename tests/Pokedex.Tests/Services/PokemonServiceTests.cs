@@ -67,8 +67,8 @@ public sealed class PokemonServiceTests
 
         Assert.IsNotNull(firstResult);
         Assert.IsNotNull(secondResult);
-        // Cached reads should still return fresh clones so callers cannot share mutable state.
-        Assert.AreNotSame(firstResult, secondResult);
+        // Pokemon is an immutable record, so returning the cached instance is safe.
+        Assert.AreSame(firstResult, secondResult);
         pokeApiClient.Verify(client => client.GetPokemon("mew"), Times.Once);
     }
 
