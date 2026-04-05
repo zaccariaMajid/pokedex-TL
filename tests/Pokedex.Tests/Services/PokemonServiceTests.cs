@@ -73,7 +73,7 @@ public sealed class PokemonServiceTests
     }
 
     [TestMethod]
-    public async Task GetPokemon_ReturnsCloneInsteadOfCachedInstance()
+    public async Task GetPokemon_ReturnsSameDataOnRepeatedCachedLookups()
     {
         using var cache = CreateCache();
         var pokeApiClient = new Mock<IPokeApiClient>();
@@ -86,14 +86,12 @@ public sealed class PokemonServiceTests
         var service = new PokemonService(cache, pokeApiClient.Object, translationService.Object);
 
         var firstResult = await service.GetPokemon("mew");
-
-        Assert.IsNotNull(firstResult);
-        firstResult.Description = "mutated-description";
-
         var secondResult = await service.GetPokemon("mew");
 
+        Assert.IsNotNull(firstResult);
         Assert.IsNotNull(secondResult);
-        Assert.AreEqual("base-description", secondResult.Description);
+        Assert.AreEqual(firstResult.Description, secondResult.Description);
+        pokeApiClient.Verify(client => client.GetPokemon("mew"), Times.Once);
     }
 
     [TestMethod]
@@ -160,11 +158,11 @@ public sealed class PokemonServiceTests
     private static Pokemon CreatePokemon()
     {
         return new Pokemon
-        {
-            Name = "mew",
-            Description = "base-description",
-            Habitat = "forest",
-            IsLegendary = true
-        };
+        (
+            Name: "mew",
+            Description: "base-description",
+            Habitat: "forest",
+            IsLegendary: true
+        );
     }
 }

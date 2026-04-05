@@ -104,11 +104,11 @@ public sealed class TranslationServiceTests
         string description = "original-description")
     {
         return new Pokemon
-        {
-            Name = "mew",
-            Description = description,
-            Habitat = habitat,
-            IsLegendary = isLegendary
-        };
+        (
+            Name: "mew",
+            Description: description,
+            Habitat: habitat,
+            IsLegendary: isLegendary
+        );
     }
 }
