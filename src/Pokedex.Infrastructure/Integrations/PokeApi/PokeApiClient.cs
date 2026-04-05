@@ -33,12 +33,12 @@ public sealed class PokeApiClient(HttpClient httpClient) : IPokeApiClient
             ?.FlavorText;
 
         return new Pokemon
-        {
-            Name = payload.Name ?? string.Empty,
-            Description = NormalizeFlavorText(description),
-            Habitat = string.IsNullOrWhiteSpace(payload.Habitat?.Name) ? "unknown" : payload.Habitat.Name,
-            IsLegendary = payload.IsLegendary
-        };
+        (
+            Name: payload.Name ?? string.Empty,
+            Description: NormalizeFlavorText(description),
+            Habitat: string.IsNullOrWhiteSpace(payload.Habitat?.Name) ? "unknown" : payload.Habitat.Name,
+            IsLegendary: payload.IsLegendary
+        );
     }
 
     private static string NormalizeFlavorText(string? text)

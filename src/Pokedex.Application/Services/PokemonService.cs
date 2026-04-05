@@ -18,7 +18,7 @@ public sealed class PokemonService(IMemoryCache cache, IPokeApiClient pokeApiCli
         // Return a copy so callers cannot accidentally mutate the cached instance.
         if (cache.TryGetValue<Pokemon>(cacheKey, out var cachedPokemon) && cachedPokemon is not null)
         {
-            return ClonePokemon(cachedPokemon);
+            return cachedPokemon;
         }
 
         var pokemon = await pokeApiClient.GetPokemon(name);
@@ -27,9 +27,9 @@ public sealed class PokemonService(IMemoryCache cache, IPokeApiClient pokeApiCli
             return null;
 
         // Cache only successful lookups and keep the cached value isolated from later mutations.
-        cache.Set(cacheKey, ClonePokemon(pokemon), CacheDuration);
+        cache.Set(cacheKey, pokemon, CacheDuration);
 
-        return ClonePokemon(pokemon);
+        return pokemon;
     }
     
     public async Task<Pokemon?> GetTranslatedPokemon(string name)
@@ -42,21 +42,9 @@ public sealed class PokemonService(IMemoryCache cache, IPokeApiClient pokeApiCli
         }
 
         // Preserve the base Pokemon data and only replace the description for the translated variant.
-        var translatedPokemon = ClonePokemon(pokemon);
-        translatedPokemon.Description = await translationService.TranslateDescription(pokemon);
+        var translatedDescription = await translationService.TranslateDescription(pokemon);
+        var translatedPokemon = pokemon with { Description = translatedDescription };
 
         return translatedPokemon;
-    }
-
-    private static Pokemon ClonePokemon(Pokemon pokemon)
-    {
-        // Pokemon is mutable, so callers should never share the cached/reference instance directly.
-        return new Pokemon
-        {
-            Name = pokemon.Name,
-            Description = pokemon.Description,
-            Habitat = pokemon.Habitat,
-            IsLegendary = pokemon.IsLegendary
-        };
     }
 }
