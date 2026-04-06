@@ -146,7 +146,7 @@ Base Pokémon lookups are cached in memory for 5 minutes to reduce repeated call
 
 ### Option 1 — Run locally (recommended)
 
-1. Install .NET SDK (LTS version)
+1. Install .NET SDK (last LTS version)
 2. Navigate to the API project
 3. Run:
    dotnet run
@@ -161,4 +161,4 @@ Base Pokémon lookups are cached in memory for 5 minutes to reduce repeated call
 2. Run:
    docker compose up --build
 3. The API will be available at:
-   http://localhost:8080/swagger
+   http://localhost:5000/swagger
